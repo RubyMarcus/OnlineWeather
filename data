@@ -17,9 +17,11 @@ df = pd.DataFrame.from_dict(data)
 
 #df['date'] = df['date'].astype('datetime64[s]', errors='ignore')
 
-df['date'] = pd.to_datetime(df['date'])
+#df['date'] = pd.to_datetime(df['date'])
 
-df['date'] = df['date'].apply(lambda x: x.replace(microsecond=0))
+#df['date'] = df['date'].apply(lambda x: x.replace(microsecond=0))
+
+df['date'] = pd.to_datetime(df['date'], unit='ms')
 
 # new = pd.to_datetime(df[1], format='%Y%m%d', errors='ignore')
 
