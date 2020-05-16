@@ -9,7 +9,7 @@ from plotly.offline import plot
 def sub_menu(type):
     print("""
             ###""",type, """'s menu ###
-            Press 1 choose """,type,"""'s year.
+            Press 1 choose """,type,"""'s time.
             Press 2 choose """, type,"""'s season(ex: sun)!
             Press 3 to clear your input.
             Press 4 to generate Graph.
@@ -18,7 +18,16 @@ def sub_menu(type):
     while sub_alt:          
         sub_alt = int(input(" Your choose!:"))        
         if sub_alt == 1:
-            input_year = int(input(" Please write a year!:"))
+            print("[1-latest-hour, 2-latest-day, 3-latest-months]")
+            input_time = int(input(" Please write your choose(1-3)!:"))
+            if input_time == 1:
+                input_time = " latest-hour "
+            elif input_time == 2:
+                input_time = "latest-day" 
+            elif input_time == 3:
+                input_time = "latest-months" 
+            else:
+                ValueError("Wrong input value ")          
             sub_alt = True
         elif sub_alt == 2:
             input_season = str(input(" Please write weather condition that you seeking for(ex: sun)!:"))
