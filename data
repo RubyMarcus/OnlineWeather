@@ -1,0 +1,44 @@
+import requests
+import pandas as pd
+import matplotlib.pyplot as plt
+
+parameters = {""}
+
+response = requests.get(
+    "https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/1/station/65090/period/latest-day/data.json")
+
+data = response.json()['value']
+
+df = pd.DataFrame.from_dict(data)
+
+# df['Date'] = df['Date'].astype('datetime64[ns]')
+
+# print(df['date'].astype('datetime64[ns]'))
+
+#df['date'] = df['date'].astype('datetime64[s]', errors='ignore')
+
+df['date'] = pd.to_datetime(df['date'])
+
+df['date'] = df['date'].apply(lambda x: x.replace(microsecond=0))
+
+# new = pd.to_datetime(df[1], format='%Y%m%d', errors='ignore')
+
+# df[2] = pd.Series(df[2].dt.to_pydatetime())
+
+print(df.head(100000))
+
+df.plot()
+
+plt.show()
+
+
+class data:
+
+    def __init__(self, parameter):
+        self.parameter = parameter
+        self.data = None
+
+    def get_data(self):
+        ...
+
+# "https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/1/station/65090.json"
