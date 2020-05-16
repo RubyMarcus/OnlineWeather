@@ -1,46 +1,41 @@
 import requests
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
-parameters = {""}
 
-response = requests.get(
-    "https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/1/station/65090/period/latest-day/data.json")
-
-data = response.json()['value']
-
-df = pd.DataFrame.from_dict(data)
-
-# df['Date'] = df['Date'].astype('datetime64[ns]')
-
-# print(df['date'].astype('datetime64[ns]'))
-
-#df['date'] = df['date'].astype('datetime64[s]', errors='ignore')
-
-#df['date'] = pd.to_datetime(df['date'])
-
-#df['date'] = df['date'].apply(lambda x: x.replace(microsecond=0))
-
-df['date'] = pd.to_datetime(df['date'], unit='ms')
-
-# new = pd.to_datetime(df[1], format='%Y%m%d', errors='ignore')
-
-# df[2] = pd.Series(df[2].dt.to_pydatetime())
-
-print(df.head(100000))
-
-df.plot()
-
-plt.show()
-
+# karlskrona station id 65090
 
 class data:
 
-    def __init__(self, parameter):
-        self.parameter = parameter
+    def __init__(self, station):
+        self.response = None
+        self.station = station
         self.data = None
 
-    def get_data(self):
-        ...
+    def get_data(self, parameter, period):
+        url = "https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/" \
+              "{parameter}/station/65090/period/{period}/data.json".format(parameter=parameter, period=period)
 
-# "https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/1/station/65090.json"
+        try:
+            self.response = requests.get(url, timeout=2)
+
+            return self.prepare_data()
+        except requests.exceptions.RequestException:
+            raise Exception('Connection failed.') from None
+
+    def prepare_data(self):
+        self.data = self.response.json()['value']
+
+        df = pd.DataFrame.from_dict(self.data)
+
+        df['date'] = pd.to_datetime(df['date'], unit='ms')
+
+        return self.data
+
+
+weather_data = data(65090)
+
+data = weather_data.get_data(1, 'latest-months')
+
+print(data)
