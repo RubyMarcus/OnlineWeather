@@ -46,3 +46,4 @@ data['value'] = data['value'].astype(float)
 data.plot(x='date', y='value')
 
 plt.show()
+
