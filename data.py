@@ -15,21 +15,33 @@ Parmeter which key to use (int):
 4. Relativ luftfuktighet = 6
 5. Vindhastighet = 4
 6. Vindriktning = 3
-7. Max av medel vindhastighet = 25 // maybe not this one
+7. Max av medel vindhastighet = 25 // maybe not this one (problem parsing with json)
 8. Byvind = 21
 9. Total molnmängd = 16
 10. Signifikanta moln = ? // didnt find this one
 11. Lägsta molnbas = 36
-12. Lägsta molnbas, min(15 min) = 37
-13. Solskenstid = 10
+12. Lägsta molnbas, min(15 min) = 37 # (problem parsing with json)
+13. Solskenstid = 10 # (problem parsing with json)
 14. Globalstrålning = ? / didnt find this one
-15. Långvägsstrålning = 24 / maybe not this one
+15. Långvägsstrålning = 24 / maybe not this one (problem parsing with json) 
 16. Lufttryck reducerat havsytans nivå = 9
 17. Sikt = 12
 18. Rådande väder = 13
 
-
-
+" Current working list"
+1. Lufttemperatur = 1 (celsius)
+2. Daggpunktstemperatur = 39 (celsius)
+3. Nederbördsmängd = 7 (mm)
+4. Relativ luftfuktighet = 6 (procent)
+5. Vindhastighet = 4 (m/s)
+6. Vindriktning = 3 (grader)
+    0 till 360 grader (När vindhastigheten är 0 m/s sätts vindriktningen till 0 grader. 360 grader representerar norr, 90 grader öster osv.
+7. Byvind = 21 (m/s)
+8. Total molnmängd = 16 (procent)
+9. Lägsta molnbas = 36 (m)
+10. Lufttryck reducerat havsytans nivå = 9 (pascal)
+11. Sikt = 12 (m)
+12. Rådande väder = 13 (kodvärden)
 """
 
 class data:
@@ -71,7 +83,7 @@ weather_data = data(65090)
 # 6 daggpunktstemperatur
 # 8
 
-data = weather_data.get_data(1, 'latest-day')
+data = weather_data.get_data(13, 'latest-day')
 
 print(data)
 
