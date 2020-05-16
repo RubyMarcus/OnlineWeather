@@ -6,6 +6,31 @@ import numpy as np
 
 # karlskrona station id 65090
 
+"""
+Parmeter which key to use (int):
+
+1. Lufttemperatur = 1
+2. Daggpunktstemperatur = 39
+3. Nederbördsmängd = 7
+4. Relativ luftfuktighet = 6
+5. Vindhastighet = 4
+6. Vindriktning = 3
+7. Max av medel vindhastighet = 25 // maybe not this one
+8. Byvind = 21
+9. Total molnmängd = 16
+10. Signifikanta moln = ? // didnt find this one
+11. Lägsta molnbas = 36
+12. Lägsta molnbas, min(15 min) = 37
+13. Solskenstid = 10
+14. Globalstrålning = ? / didnt find this one
+15. Långvägsstrålning = 24 / maybe not this one
+16. Lufttryck reducerat havsytans nivå = 9
+17. Sikt = 12
+18. Rådande väder = 13
+
+
+
+"""
 
 class data:
 
@@ -36,6 +61,9 @@ class data:
 
         return df
 
+    def content_type(self):
+        return self.response.headers["content-type"]
+
 
 weather_data = data(65090)
 
@@ -53,3 +81,21 @@ data.plot(x='date', y='value')
 
 plt.show()
 
+
+### Get parameters
+
+# url = "https://opendata-download-metobs.smhi.se/api/version/1.0.json"
+#
+# response = requests.get(url)
+#
+# print(response.headers)
+#
+# pd.set_option('display.max_columns', None)
+#
+# data = response.json()['resource']
+#
+# df = pd.DataFrame.from_dict(data)
+#
+# print(df)
+#
+# print(data)
