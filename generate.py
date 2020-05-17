@@ -63,9 +63,9 @@ class Generate:
 # 8
 
 
-con = 1 , 'hello'
-gen = Generate()
-gen.generate_graph("latest-day", con)
+#con = 1 , 'hello'
+#gen = Generate()
+#gen.generate_graph("latest-day", con)
 # gen.generate_chart("2019", "15")
 
 # data_karlskrona = px.data.gapminder().query("country == 'Canada'")
