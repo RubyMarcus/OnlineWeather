@@ -3,9 +3,17 @@ import plotly.graph_objects as go
 import plotly.graph_objs as go
 import matplotlib as plt
 from plotly.offline import plot
+from data import data
+import requests
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 class Generate:
+    def __init__(self):
+        self.weather_data = data(65090)
+
     def generate_chart(self, year, days):
         year_lst = [2016, 2018]
         days_lst = [10, 5]
@@ -29,18 +37,43 @@ class Generate:
         fig.write_html('first_figure.html', auto_open=True)
 
 
+
+    def generate_graph(self,period, condition):
+
+        value,title = condition
+        data = self.weather_data.get_data(value, period)
+
+
+        data['value'] = data['value'].astype(float)
+
+        data.plot(x='date', y='value', title=title)
+        set(0,'defaultTextFontName','Courier')
+
+        plt.show()
+
+    def generate_report(self):
+        pass
+
+
+
+
+
+# 1 lufttemperatur
+# 6 daggpunktstemperatur
+# 8
+
+
+con = 1 , 'hello'
 gen = Generate()
-gen.generate_chart("2019", "15")
+gen.generate_graph("latest-day", con)
+# gen.generate_chart("2019", "15")
 
 # data_karlskrona = px.data.gapminder().query("country == 'Canada'")
 # fig = px.bar(data_karlskrona, x='Month', y='Days')
 # fig.write_html('first_figure.html', auto_open=True)
 
 
-# def generate_graph(self):
-#     pass
-# def generate_report(self):
-#     pass
+
 
 
 # gen = Generate()
