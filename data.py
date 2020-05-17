@@ -1,0 +1,118 @@
+import requests
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+# karlskrona station id 65090
+
+"""
+Parmeter which key to use (int):
+
+1. Lufttemperatur = 1
+2. Daggpunktstemperatur = 39
+3. Nederbördsmängd = 7
+4. Relativ luftfuktighet = 6
+5. Vindhastighet = 4
+6. Vindriktning = 3
+7. Max av medel vindhastighet = 25 // maybe not this one (problem parsing with json)
+8. Byvind = 21
+9. Total molnmängd = 16
+10. Signifikanta moln = ? // didnt find this one
+11. Lägsta molnbas = 36
+12. Lägsta molnbas, min(15 min) = 37 # (problem parsing with json)
+13. Solskenstid = 10 # (problem parsing with json)
+14. Globalstrålning = ? / didnt find this one
+15. Långvägsstrålning = 24 / maybe not this one (problem parsing with json) 
+16. Lufttryck reducerat havsytans nivå = 9
+17. Sikt = 12
+18. Rådande väder = 13
+
+" Current working list"
+1. Lufttemperatur = 1 (celsius)
+2. Daggpunktstemperatur = 39 (celsius)
+3. Nederbördsmängd = 7 (mm)
+4. Relativ luftfuktighet = 6 (procent)
+5. Vindhastighet = 4 (m/s)
+6. Vindriktning = 3 (grader)
+    0 till 360 grader (När vindhastigheten är 0 m/s sätts vindriktningen till 0 grader. 360 grader representerar norr, 90 grader öster osv.
+7. Byvind = 21 (m/s)
+8. Total molnmängd = 16 (procent)
+9. Lägsta molnbas = 36 (m)
+10. Lufttryck reducerat havsytans nivå = 9 (pascal)
+11. Sikt = 12 (m)
+12. Rådande väder = 13 (kodvärden)
+
+Periods:
+1. latest-hour
+2. latest-day
+3. latest-months
+"""
+
+class data:
+
+    def __init__(self, station):
+        self.response = None
+        self.station = station
+        self.data = None
+
+    def get_data(self, parameter, period):
+        url = "https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/" \
+              "{parameter}/station/65090/period/{period}/data.json".format(parameter=parameter, period=period)
+
+        try:
+            self.response = requests.get(url, timeout=2)
+
+            print(self.response.content)
+
+            return self.prepare_data()
+        except requests.exceptions.RequestException:
+            raise Exception('Connection failed.') from None
+
+    def prepare_data(self):
+        self.data = self.response.json()['value']
+
+        df = pd.DataFrame.from_dict(self.data)
+
+        df['date'] = pd.to_datetime(df['date'], unit='ms')
+
+        return df
+
+    def content_type(self):
+        return self.response.headers["content-type"]
+
+
+weather_data = data(65090)
+
+# 1 lufttemperatur
+# 6 daggpunktstemperatur
+# 8
+
+data = weather_data.get_data(1, 'latest-day')
+
+print(data)
+
+data['value'] = data['value'].astype(float)
+
+data.plot(x='date', y='value')
+
+plt.show()
+
+
+### Get parameters
+
+# url = "https://opendata-download-metobs.smhi.se/api/version/1.0.json"
+#
+# response = requests.get(url)
+#
+# print(response.headers)
+#
+# pd.set_option('display.max_columns', None)
+#
+# data = response.json()['resource']
+#
+# df = pd.DataFrame.from_dict(data)
+#
+# print(df)
+#
+# print(data)

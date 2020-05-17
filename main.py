@@ -1,6 +1,7 @@
 import plotly.express as px
 import plotly.graph_objects as go
 import plotly.graph_objs as go
+import data
 import matplotlib as plt
 from plotly.offline import plot
 
@@ -9,16 +10,25 @@ from plotly.offline import plot
 def sub_menu(type):
     print("""
             ###""",type, """'s menu ###
-            Press 1 choose """,type,"""'s year.
+            Press 1 choose """,type,"""'s time.
             Press 2 choose """, type,"""'s season(ex: sun)!
             Press 3 to clear your input.
             Press 4 to generate Graph.
             Press 5 for back to main menu! """)
     sub_alt = True
-    while sub_alt:          
-        sub_alt = int(input(" Your choose!:"))        
+    while sub_alt:
+        sub_alt = int(input(" Your choose!:"))
         if sub_alt == 1:
-            input_year = int(input(" Please write a year!:"))
+            print("[1-latest-hour, 2-latest-day, 3-latest-months]")
+            input_time = int(input(" Please write your choose(1-3)!:"))
+            if input_time == 1:
+                input_time = "latest-hour "
+            elif input_time == 2:
+                input_time = "latest-day" 
+            elif input_time == 3:
+                input_time = "latest-months" 
+            else:
+                ValueError("Wrong input value ")          
             sub_alt = True
         elif sub_alt == 2:
             input_season = str(input(" Please write weather condition that you seeking for(ex: sun)!:"))
@@ -30,10 +40,12 @@ def sub_menu(type):
             menu()
         elif sub_alt == 4:
             graphs_alt = False
-            #generate the chart    
+            # generate the chart
         else:
             sub_alt = False
-            menu()  
+            menu()
+
+
 def menu():
     print(""" 
             # Welcome to Karlskrona online weather #
@@ -48,12 +60,12 @@ def menu():
         sub_menu("chart")
 
     if user_choose == 2:
-        print (""" 
+        print(""" 
                     && Graphs options && 
                     1) Work with a single graph! 
                     2) Compare two graphs!
                     3) Back to main menu.""")
-        graph_op = int(input(" Pleas choose your option :"))  
+        graph_op = int(input(" Pleas choose your option :"))
         if graph_op == 1:
             sub_menu("graph")
 
@@ -68,15 +80,17 @@ def menu():
             Please write your choose : """)
 
             sub_alt = True
-            while sub_alt:          
-                sub_alt = int(input(" Your choose!:"))        
+            while sub_alt:
+                sub_alt = int(input(" Your choose!:"))
                 if sub_alt == 1:
                     input_year1 = int(input(" Please write a year for the first graph!:"))
                     input_year2 = int(input(" Please write a year for the second graph!:"))
                     sub_alt = True
                 elif sub_alt == 2:
-                    input_season1 = str(input(" Please write weather condition that you seeking for the First graph(ex: sun)!:"))
-                    input_season2 = str(input(" Please write weather condition that you seeking for the Second graph(ex: sun)!:"))
+                    input_season1 = str(
+                        input(" Please write weather condition that you seeking for the First graph(ex: sun)!:"))
+                    input_season2 = str(
+                        input(" Please write weather condition that you seeking for the Second graph(ex: sun)!:"))
                     sub_alt = True
                 elif sub_alt == 3:
                     sub_alt = False
@@ -85,34 +99,24 @@ def menu():
                     menu()
                 elif sub_alt == 4:
                     sub_alt = False
-                    #generate the chart    
+                    # generate the chart
                 else:
                     sub_alt = False
-                    menu()  
+                    menu()
         elif graph_op == 3:
-            menu()  
+            menu()
 
     if user_choose == 3:
-        sub_menu("Report") 
+        sub_menu("Report")
 
     else:
-        exit()               
-                    
+        exit()
 
 
+menu()
 
 menu()        
 
-# Class: ( Van )
-# Generate Chart:
-# Create a chart with plotly.
-# Check that correct data gets loaded.
-# Generate Graph:
-# Create a graph with plotly.
-# Check that correct data gets loaded.
-# Generate Report:
-# Use pd.mean() func to get average sunshine.
-#
 
 class Generate:
     def generate_chart(self, year, days):
