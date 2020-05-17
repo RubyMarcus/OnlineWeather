@@ -36,18 +36,13 @@ class Generate:
         # fig.show()
         fig.write_html('first_figure.html', auto_open=True)
 
-
-
-    def generate_graph(self,period, condition):
-
-        value,title = condition
+    def generate_graph(self, period, condition):
+        value, title = condition
         data = self.weather_data.get_data(value, period)
-
 
         data['value'] = data['value'].astype(float)
 
         data.plot(x='date', y='value', title=title)
-        set(0,'defaultTextFontName','Courier')
 
         plt.show()
 
@@ -55,25 +50,16 @@ class Generate:
         pass
 
 
-
-
-
 # 1 lufttemperatur
 # 6 daggpunktstemperatur
 # 8
 
 
-con = 1 , 'hello'
-gen = Generate()
-gen.generate_graph("latest-day", con)
 # gen.generate_chart("2019", "15")
 
 # data_karlskrona = px.data.gapminder().query("country == 'Canada'")
 # fig = px.bar(data_karlskrona, x='Month', y='Days')
 # fig.write_html('first_figure.html', auto_open=True)
-
-
-
 
 
 # gen = Generate()
@@ -115,5 +101,3 @@ gen.generate_graph("latest-day", con)
 
 # grid_url = py.grid_ops.upload(grid, filename='grid_with_metadata_'+str(dt.now()), meta=meta)
 # print(grid_url)
-
-

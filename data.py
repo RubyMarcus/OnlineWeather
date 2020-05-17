@@ -3,7 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 # karlskrona station id 65090
 
 """
@@ -49,6 +48,7 @@ Periods:
 3. latest-months
 """
 
+
 class data:
 
     def __init__(self, station):
@@ -80,7 +80,6 @@ class data:
 
     def content_type(self):
         return self.response.headers["content-type"]
-
 
 ### Get parameters
 
