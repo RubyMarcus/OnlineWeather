@@ -42,6 +42,11 @@ Parmeter which key to use (int):
 10. Lufttryck reducerat havsytans nivå = 9 (pascal)
 11. Sikt = 12 (m)
 12. Rådande väder = 13 (kodvärden)
+
+Periods:
+1. latest-hour
+2. latest-day
+3. latest-months
 """
 
 class data:
@@ -83,7 +88,7 @@ weather_data = data(65090)
 # 6 daggpunktstemperatur
 # 8
 
-data = weather_data.get_data(13, 'latest-day')
+data = weather_data.get_data(1, 'latest-day')
 
 print(data)
 

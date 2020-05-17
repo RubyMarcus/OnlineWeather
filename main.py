@@ -1,6 +1,7 @@
 import plotly.express as px
 import plotly.graph_objects as go
 import plotly.graph_objs as go
+import data
 import matplotlib as plt
 from plotly.offline import plot
 
@@ -21,7 +22,7 @@ def sub_menu(type):
             print("[1-latest-hour, 2-latest-day, 3-latest-months]")
             input_time = int(input(" Please write your choose(1-3)!:"))
             if input_time == 1:
-                input_time = " latest-hour "
+                input_time = "latest-hour "
             elif input_time == 2:
                 input_time = "latest-day" 
             elif input_time == 3:
