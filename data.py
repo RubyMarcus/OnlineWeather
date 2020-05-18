@@ -63,7 +63,7 @@ class data:
         try:
             self.response = requests.get(url, timeout=2)
 
-            print(self.response.content)
+            # print(self.response.content)
 
             return self.prepare_data()
         except requests.exceptions.RequestException:
@@ -76,10 +76,21 @@ class data:
 
         df['date'] = pd.to_datetime(df['date'], unit='ms')
 
+        df['value'] = df['value'].astype(float)
+
         return df
 
     def content_type(self):
         return self.response.headers["content-type"]
+
+
+test = data(65090)
+
+#data = test.get_data(1, 'corrected-archive')
+
+#data.plot(x='date', y='value')
+
+
 
 ### Get parameters
 

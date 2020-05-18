@@ -38,13 +38,20 @@ class Generate:
 
     def generate_graph(self, period, condition):
         value, title = condition
-        data = self.weather_data.get_data(value, period)
+        data_ = self.weather_data.get_data(value, period)
 
-        data['value'] = data['value'].astype(float)
-
-        data.plot(x='date', y='value', title=title)
+        data_.plot(x='date', y='value', title=title)
 
         plt.show()
+
+    def generate_chart_test(self, period, condition):
+        value, title = condition
+        data_ = self.weather_data.get_data(value, period)
+
+        data_.plot(x='date', y='value', title=title, kind='bar')
+
+        plt.show()
+
 
     def generate_report(self):
         pass
