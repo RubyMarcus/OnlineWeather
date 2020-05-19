@@ -87,8 +87,10 @@ def sub_menu(type):
             if input_condition == 12:
                 input_condition = 13, "Rådande väder (kodvärden)"
 
-            if len(input_list) >= 2:
-                print("Try to clear list, only 2 values allowed")
+            if type == 'Report' and len(input_list) >= 1:
+                print('Only one parameter allowed in report.')
+            elif len(input_list) >= 2:
+                print("Try to clear list, only 2 values allowed.")
             else:
                 input_list.append(input_condition)
             sub_alt = True
@@ -107,9 +109,9 @@ def sub_menu(type):
                 if type == 'graph':
                     gen.generate_graph(input_time, input_list)
                 elif type == 'Report':
-                    gen.generate_report(input_time, input_condition)
+                    gen.generate_report(input_time, input_list)
                 else:
-                    gen.generate_chart(input_time, input_condition)
+                    gen.generate_chart(input_time, input_list)
 
             sub_alt = True
         else:
