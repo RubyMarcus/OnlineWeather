@@ -81,3 +81,38 @@ class data:
     def content_type(self):
         return self.response.headers["content-type"]
 
+
+weather_data = data(65090)
+
+# 1 lufttemperatur
+# 6 daggpunktstemperatur
+# 8
+
+data = weather_data.get_data(1, 'latest-day')
+
+print(data)
+
+data['value'] = data['value'].astype(float)
+
+data.plot(x='date', y='value')
+
+plt.show()
+
+
+### Get parameters
+
+# url = "https://opendata-download-metobs.smhi.se/api/version/1.0.json"
+#
+# response = requests.get(url)
+#
+# print(response.headers)
+#
+# pd.set_option('display.max_columns', None)
+#
+# data = response.json()['resource']
+#
+# df = pd.DataFrame.from_dict(data)
+#
+# print(df)
+#
+# print(data)
