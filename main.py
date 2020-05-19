@@ -79,6 +79,8 @@ def sub_menu(type):
 
             if type == 'graph':
                 gen.generate_graph(input_time, input_condition)
+            elif type == 'Report':
+                gen.generate_report(input_time, input_condition)
             else:
                 gen.generate_chart(input_time, input_condition)
 
@@ -115,8 +117,9 @@ def menu():
         elif graph_op == 2:
             print("""
             ### Graph's menu ###
+         
             Press 1 choose graph's year.
-            Press 2 choose graph's season(ex: sun)!
+            Press 2 choose graph's parameters!
             Press 3 to clear your input.
             Press 4 to generate Graph.
             Press 5 for back to main menu! 
@@ -153,7 +156,17 @@ def menu():
             menu()
 
     if user_choose == 3:
-        sub_menu("Report")
+        
+        print(""" 
+                    && Report options && 
+                    1) Generate Raport 
+                    2) Back to main menu""")
+        graph_op = int(input(" Pleas choose your option :"))
+        if graph_op == 1:
+            sub_menu("Report")
+
+        elif graph_op == 2:
+            menu()        
 
     else:
         exit()
