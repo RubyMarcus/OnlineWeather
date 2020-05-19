@@ -3,7 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 # karlskrona station id 65090
 
 """
@@ -49,6 +48,7 @@ Periods:
 3. latest-months
 """
 
+
 class data:
 
     def __init__(self, station):
@@ -63,7 +63,7 @@ class data:
         try:
             self.response = requests.get(url, timeout=2)
 
-            print(self.response.content)
+            # print(self.response.content)
 
             return self.prepare_data()
         except requests.exceptions.RequestException:
@@ -76,27 +76,26 @@ class data:
 
         df['date'] = pd.to_datetime(df['date'], unit='ms')
 
+        df['value'] = df['value'].astype(float)
+
         return df
 
     def content_type(self):
         return self.response.headers["content-type"]
 
 
-weather_data = data(65090)
 
-# 1 lufttemperatur
-# 6 daggpunktstemperatur
-# 8
 
-data = weather_data.get_data(1, 'latest-day')
 
-print(data)
 
-data['value'] = data['value'].astype(float)
 
-data.plot(x='date', y='value')
 
-plt.show()
+test = data(65090)
+
+#data = test.get_data(1, 'corrected-archive')
+
+#data.plot(x='date', y='value')
+
 
 
 ### Get parameters
