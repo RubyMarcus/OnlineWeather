@@ -52,31 +52,73 @@ Periods:
 class data:
 
     def __init__(self, station):
-        self.response = None
         self.station = station
-        self.data = None
+        self.data_frames = []
+        self.parameter_names = []
 
-    def get_data(self, parameter, period):
-        url = "https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/" \
-              "{parameter}/station/65090/period/{period}/data.json".format(parameter=parameter, period=period)
+    def get_data(self, parameters, period):
+        """
+        This function will retrieve data from smhi api. Since they only allow specific periods such as 'latest-hour,
+        latest-day, latest-month' its kinda limited. You can only download one parameter at time as well that is why we
+        are using a for loop to download multiple parameters.
 
-        try:
-            self.response = requests.get(url, timeout=2)
+        :param parameters:
+        :param period:
+        :return:
+        """
 
-            return self.prepare_data()
-        except requests.exceptions.RequestException:
-            raise Exception('Connection failed.') from None
+        self.parameter_names.clear()
 
-    def prepare_data(self):
-        self.data = self.response.json()['value']
+        for parameter in parameters:
+            parameter_code, parameter_name = parameter
 
-        df = pd.DataFrame.from_dict(self.data)
+            self.parameter_names.append(parameter_name)
+
+            url = "https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/" \
+                  "{parameter}/station/65090/period/{period}/data.json".format(parameter=parameter_code, period=period)
+
+            try:
+                response = requests.get(url, timeout=2)
+
+                self.prepare_data(response, parameter_name)
+            except requests.exceptions.RequestException:
+                raise Exception('Connection failed.') from None
+
+        if len(parameters) == 2:
+            return self.merge_data()
+        return self.data_frames[0]
+
+    def prepare_data(self, response, parameter_name):
+        """
+        Convert response to data frame.
+
+        :param response:
+        :param parameter_name:
+        :return:
+        """
+
+        data_ = response.json()['value']
+
+        df = pd.DataFrame.from_dict(data_)
 
         df['date'] = pd.to_datetime(df['date'], unit='ms')
 
         df['value'] = df['value'].astype(float)
 
-        return df
+        renamed_df = df.rename(columns={'value': parameter_name})
 
-    def content_type(self):
-        return self.response.headers["content-type"]
+        self.data_frames.append(renamed_df)
+
+    def merge_data(self):
+        """
+        Merge two parameters of separate data frames to one.
+
+        :return:
+        """
+
+        df_one = self.data_frames[0]
+        df_two = self.data_frames[1]
+
+        df_one[self.parameter_names[0]] = df_two[self.parameter_names[1]]
+
+        return df_one
