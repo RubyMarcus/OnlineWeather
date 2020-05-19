@@ -157,6 +157,3 @@ def menu():
 
     else:
         exit()
-
-
-menu()
