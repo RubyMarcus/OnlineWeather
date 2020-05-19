@@ -89,6 +89,14 @@ class data:
         return self.data_frames[0]
 
     def prepare_data(self, response, parameter_name):
+        """
+        Convert response to data frame.
+
+        :param response:
+        :param parameter_name:
+        :return:
+        """
+
         data_ = response.json()['value']
 
         df = pd.DataFrame.from_dict(data_)
@@ -104,6 +112,7 @@ class data:
     def merge_data(self):
         """
         Merge two parameters of separate data frames to one.
+
         :return:
         """
 
