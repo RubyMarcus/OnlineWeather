@@ -5,6 +5,7 @@ gen = Generate()
 
 
 def sub_menu(type):
+    input_list = []
     sub_alt = True
     while sub_alt:
         
@@ -69,6 +70,11 @@ def sub_menu(type):
                 input_condition = 12, "Sikt (m)"
             if input_condition ==12:
                 input_condition = 13, "Rådande väder (kodvärden)"
+            
+            if len(input_list) >= 1:
+                print("Try to clear list, only 2 values allowed")
+            else:
+                input_list.append(input_condition)
             sub_alt = True
         elif sub_alt == 3:
             sub_alt = True
@@ -78,7 +84,7 @@ def sub_menu(type):
         elif sub_alt == 4:
 
             if type == 'graph':
-                gen.generate_graph(input_time, input_condition)
+                gen.generate_graph(input_time, input_list)
             elif type == 'Report':
                 gen.generate_report(input_time, input_condition)
             else:
@@ -118,6 +124,11 @@ def menu():
             print("""
             ### Graph's menu ###
          
+            Period time chosen: latest-day
+            Parameters chosen: Byvind
+
+
+
             Press 1 choose graph's year.
             Press 2 choose graph's parameters!
             Press 3 to clear your input.
