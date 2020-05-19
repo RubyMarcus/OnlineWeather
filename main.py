@@ -4,15 +4,31 @@ from generate import *
 gen = Generate()
 
 
+def get_attr_name(input_list):
+    attr_names = ""
+
+    for item in input_list:
+        code, name = item
+
+        attr_names += " " + name
+
+    return attr_names
+
+
 def sub_menu(type):
     input_list = []
     sub_alt = True
+    input_time = ""
     while sub_alt:
-        
+
         print("""
-            ###""",type, """'s menu ###
-            Press 1 to choose """,type,"""'s time.
-            Press 2 to choose """, type,"""'s season(ex: sun)!
+            ###""", type, """'s menu ###
+            
+            Chosen parameters:""", get_attr_name(input_list), """
+            Chosen period:""", input_time, """
+            
+            Press 1 to choose """, type, """'s time.
+            Press 2 to choose """, type, """'s season(ex: sun)!
             Press 3 to clear your input.
             Press 4 to generate """, type, """.
             Press 5 for back to main menu! """)
@@ -24,11 +40,11 @@ def sub_menu(type):
             if input_time == 1:
                 input_time = "latest-hour "
             elif input_time == 2:
-                input_time = "latest-day" 
+                input_time = "latest-day"
             elif input_time == 3:
-                input_time = "latest-months" 
+                input_time = "latest-months"
             else:
-                ValueError("Wrong input value ")          
+                ValueError("Wrong input value ")
             sub_alt = True
         elif sub_alt == 2:
             print(""" 
@@ -43,53 +59,57 @@ def sub_menu(type):
                     9. Lägsta molnbas (m).
                     10. Lufttryck reducerat havsytans nivå (pascal). 
                     11. Sikt (m).
-                    12. Rådande väder (kodvärden).""")    
-                    
+                    12. Rådande väder (kodvärden).""")
+
             input_condition = int(input(" Please write your choice number for condition that you seeking for(1-12)!:"))
-            if input_condition ==1:
-                input_condition = 1,"Lufttemperatur (celsius)"
-            if input_condition ==2:
+            if input_condition == 1:
+                input_condition = 1, "Lufttemperatur (celsius)"
+            if input_condition == 2:
                 input_condition = 39, "Daggpunktstemperatur (celsius)"
-            if input_condition ==3:
+            if input_condition == 3:
                 input_condition = 7, "Nederbördsmängd (mm)"
-            if input_condition ==4:
+            if input_condition == 4:
                 input_condition = 6, "Relativ luftfuktighet (procent)"
-            if input_condition ==5:
+            if input_condition == 5:
                 input_condition = 4, "Vindhastighet (m/s)"
-            if input_condition ==6:
+            if input_condition == 6:
                 input_condition = 3, "Vindriktning (grader)"
-            if input_condition ==7:
+            if input_condition == 7:
                 input_condition = 21, "Byvind (m/s)"
-            if input_condition ==8:
+            if input_condition == 8:
                 input_condition = 16, "Total molnmängd (procent)"
-            if input_condition ==9:
+            if input_condition == 9:
                 input_condition = 36, "Lägsta molnbas (m)"
-            if input_condition ==10:
+            if input_condition == 10:
                 input_condition = 9, "Lufttryck reducerat havsytans nivå (pascal)"
-            if input_condition ==11:
+            if input_condition == 11:
                 input_condition = 12, "Sikt (m)"
-            if input_condition ==12:
+            if input_condition == 12:
                 input_condition = 13, "Rådande väder (kodvärden)"
-            
-            if len(input_list) >= 1:
+
+            if len(input_list) >= 2:
                 print("Try to clear list, only 2 values allowed")
             else:
                 input_list.append(input_condition)
             sub_alt = True
         elif sub_alt == 3:
             sub_alt = True
-            input_time= 0
-            input_condition = 0
-        
+            input_time = ""
+            input_condition = ""
+
+            input_list.clear()
+
         elif sub_alt == 4:
 
-            if type == 'graph':
-                gen.generate_graph(input_time, input_list)
-            elif type == 'Report':
-                gen.generate_report(input_time, input_condition)
+            if input_time is "" or not input_list:
+                print('You need to have a period and a parameter')
             else:
-                gen.generate_chart(input_time, input_condition)
-
+                if type == 'graph':
+                    gen.generate_graph(input_time, input_list)
+                elif type == 'Report':
+                    gen.generate_report(input_time, input_condition)
+                else:
+                    gen.generate_chart(input_time, input_condition)
 
             sub_alt = True
         else:
@@ -123,12 +143,7 @@ def menu():
         elif graph_op == 2:
             print("""
             ### Graph's menu ###
-         
-            Period time chosen: latest-day
-            Parameters chosen: Byvind
-
-
-
+            
             Press 1 choose graph's year.
             Press 2 choose graph's parameters!
             Press 3 to clear your input.
@@ -157,7 +172,7 @@ def menu():
                 elif sub_alt == 4:
                     sub_alt = False
 
-                    #gen.generate_chart_test()
+                    # gen.generate_chart_test()
 
                     # generate the chart
                 else:
@@ -167,7 +182,7 @@ def menu():
             menu()
 
     if user_choose == 3:
-        
+
         print(""" 
                     && Report options && 
                     1) Generate Raport 
@@ -177,7 +192,10 @@ def menu():
             sub_menu("Report")
 
         elif graph_op == 2:
-            menu()        
+            menu()
 
     else:
         exit()
+
+
+menu()
