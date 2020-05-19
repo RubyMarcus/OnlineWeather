@@ -63,8 +63,6 @@ class data:
         try:
             self.response = requests.get(url, timeout=2)
 
-            # print(self.response.content)
-
             return self.prepare_data()
         except requests.exceptions.RequestException:
             raise Exception('Connection failed.') from None
@@ -84,12 +82,21 @@ class data:
         return self.response.headers["content-type"]
 
 
-test = data(65090)
+weather_data = data(65090)
 
-#data = test.get_data(1, 'corrected-archive')
+# 1 lufttemperatur
+# 6 daggpunktstemperatur
+# 8
 
-#data.plot(x='date', y='value')
+data = weather_data.get_data(1, 'latest-day')
 
+print(data)
+
+data['value'] = data['value'].astype(float)
+
+data.plot(x='date', y='value')
+
+plt.show()
 
 
 ### Get parameters

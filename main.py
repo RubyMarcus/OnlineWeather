@@ -1,13 +1,5 @@
-import plotly.express as px
-import plotly.graph_objects as go
-import plotly.graph_objs as go
-import data
-import matplotlib as plt
-from plotly.offline import plot
-from generate import *
-
-
 # Created by marcuslundgren at 2020-05-08
+from generate import *
 
 gen = Generate()
 
@@ -88,7 +80,7 @@ def sub_menu(type):
             if type == 'graph':
                 gen.generate_graph(input_time, input_condition)
             else:
-                gen.generate_chart_test(input_time, input_condition)
+                gen.generate_chart(input_time, input_condition)
 
 
             sub_alt = True
