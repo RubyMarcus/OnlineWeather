@@ -3,7 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 # karlskrona station id 65090
 
 """
@@ -49,6 +48,7 @@ Periods:
 3. latest-months
 """
 
+
 class data:
 
     def __init__(self, station):
@@ -63,8 +63,6 @@ class data:
         try:
             self.response = requests.get(url, timeout=2)
 
-            print(self.response.content)
-
             return self.prepare_data()
         except requests.exceptions.RequestException:
             raise Exception('Connection failed.') from None
@@ -76,26 +74,9 @@ class data:
 
         df['date'] = pd.to_datetime(df['date'], unit='ms')
 
+        df['value'] = df['value'].astype(float)
+
         return df
 
     def content_type(self):
         return self.response.headers["content-type"]
-
-
-### Get parameters
-
-# url = "https://opendata-download-metobs.smhi.se/api/version/1.0.json"
-#
-# response = requests.get(url)
-#
-# print(response.headers)
-#
-# pd.set_option('display.max_columns', None)
-#
-# data = response.json()['resource']
-#
-# df = pd.DataFrame.from_dict(data)
-#
-# print(df)
-#
-# print(data)
