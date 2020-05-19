@@ -68,6 +68,7 @@ class data:
         """
 
         self.parameter_names.clear()
+        self.data_frames.clear()
 
         for parameter in parameters:
             parameter_code, parameter_name = parameter
@@ -119,6 +120,8 @@ class data:
         df_one = self.data_frames[0]
         df_two = self.data_frames[1]
 
-        df_one[self.parameter_names[0]] = df_two[self.parameter_names[1]]
+        df_one[self.parameter_names[1]] = df_two[self.parameter_names[1]]
+
+        print(df_one)
 
         return df_one
