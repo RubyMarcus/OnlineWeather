@@ -84,6 +84,17 @@ class data:
         return self.response.headers["content-type"]
 
 
+weather_data = data(65090)
+
+# 1 lufttemperatur
+# 6 daggpunktstemperatur
+# 8
+
+data = weather_data.get_data(1, 'latest-day')
+
+
+
+
 test = data(65090)
 
 #data = test.get_data(1, 'corrected-archive')
