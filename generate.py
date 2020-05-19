@@ -40,13 +40,11 @@ class Generate:
 
     def generate_graph(self,period, condition):
 
-        value,title = condition
-        data = self.weather_data.get_data(value, period)
+        data = self.weather_data.get_data(condition, period)
 
 
-        data['value'] = data['value'].astype(float)
 
-        data.plot(x='date', y='value', title=title)
+        data.plot(x='date')
         set(0,'defaultTextFontName','Courier')
 
         plt.show()
