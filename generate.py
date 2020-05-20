@@ -1,13 +1,6 @@
-import plotly.express as px
-import plotly.graph_objects as go
-import plotly.graph_objs as go
 import matplotlib as plt
-from plotly.offline import plot
 from data import data
-import requests
-import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
 
 
 class Generate:
