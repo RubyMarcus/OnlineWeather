@@ -136,52 +136,50 @@ def menu():
         print(""" 
                     && Graphs options && 
                     1) Work with a single graph! 
-                    2) Compare two graphs!
-                    3) Back to main menu.""")
+                    2) Back to main menu.""")
         graph_op = int(input(" Pleas choose your option :"))
         if graph_op == 1:
             sub_menu("graph")
 
         elif graph_op == 2:
-            print("""
-            ### Graph's menu ###
-            
-            Press 1 choose graph's year.
-            Press 2 choose graph's parameters!
-            Press 3 to clear your input.
-            Press 4 to generate Graph.
-            Press 5 for back to main menu! 
-            Please write your choose : """)
-
-            sub_alt = True
-            while sub_alt:
-                sub_alt = int(input(" Your choose!:"))
-                if sub_alt == 1:
-                    input_year1 = int(input(" Please write a year for the first graph!:"))
-                    input_year2 = int(input(" Please write a year for the second graph!:"))
-                    sub_alt = True
-                elif sub_alt == 2:
-                    input_season1 = str(
-                        input(" Please write weather condition that you seeking for the First graph(ex: sun)!:"))
-                    input_season2 = str(
-                        input(" Please write weather condition that you seeking for the Second graph(ex: sun)!:"))
-                    sub_alt = True
-                elif sub_alt == 3:
-                    sub_alt = False
-                    input_year1 and input_year2 == 0
-                    input_season1 and input_season2 == " "
-                    menu()
-                elif sub_alt == 4:
-                    sub_alt = False
-
-                    # gen.generate_chart_test()
-
-                    # generate the chart
-                else:
-                    sub_alt = False
-                    menu()
-        elif graph_op == 3:
             menu()
+            # print("""
+            # ### Graph's menu ###
+            #
+            # Press 1 choose graph's year.
+            # Press 2 choose graph's parameters!
+            # Press 3 to clear your input.
+            # Press 4 to generate Graph.
+            # Press 5 for back to main menu!
+            # Please write your choose : """)
+            #
+            # sub_alt = True
+            # while sub_alt:
+            #     sub_alt = int(input(" Your choose!:"))
+            #     if sub_alt == 1:
+            #         input_year1 = int(input(" Please write a year for the first graph!:"))
+            #         input_year2 = int(input(" Please write a year for the second graph!:"))
+            #         sub_alt = True
+            #     elif sub_alt == 2:
+            #         input_season1 = str(
+            #             input(" Please write weather condition that you seeking for the First graph(ex: sun)!:"))
+            #         input_season2 = str(
+            #             input(" Please write weather condition that you seeking for the Second graph(ex: sun)!:"))
+            #         sub_alt = True
+            #     elif sub_alt == 3:
+            #         sub_alt = False
+            #         input_year1 and input_year2 == 0
+            #         input_season1 and input_season2 == " "
+            #         menu()
+            #     elif sub_alt == 4:
+            #         sub_alt = False
+            #
+            #         # gen.generate_chart_test()
+            #
+            #         # generate the chart
+            #     else:
+            #         sub_alt = False
+            #         menu()
 
     if user_choose == 3:
 
