@@ -10,7 +10,7 @@ class Generate:
     def generate_chart(self, period, condition):
         data = self.weather_data.get_data(condition, period)
 
-        data.plot(x='date', kind='bar')
+        data.plot(x='date', kind='barh')
         plt.show()
 
     def generate_graph(self, period, condition):
